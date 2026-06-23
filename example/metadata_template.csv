@@ -1,0 +1,6 @@
+sample_id,condition,tissue
+sample_01,Control,Liver
+sample_02,Control,Liver
+sample_03,Intervention_A,Liver
+sample_04,Intervention_A,Liver
+

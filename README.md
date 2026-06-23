@@ -1,0 +1,169 @@
+# tAge Hallmarks RNA-seq Workflow
+
+Reusable one-line R workflow for transcriptomic aging analysis from raw RNA-seq counts or RSEM `*.genes.results` files.
+
+The workflow runs:
+
+1. vadim `tAge` prediction.
+2. DESeq2 VST normalization from raw/RSEM expected counts.
+3. Open Genes aged-up/down Hallmarks of Aging ssGSEA.
+4. limma intervention-vs-control tests on ssGSEA scores.
+5. Static HTML and PDF reports.
+
+## Requirements
+
+This repository contains workflow code only. It does not include raw data, trained clock models, or generated results.
+
+Install the R/Python runtime with pixi:
+
+```bash
+pixi install
+pixi run Rscript scripts/install_requirements.R --check-only
+```
+
+The workflow expects:
+
+- the `tAge` R package to be installed in the runtime environment
+- local tAge model files under `models/`
+- a model registry at `config/validation_models.csv`
+
+Missing tAge models are not downloaded automatically in v1.
+
+## Sources
+
+- tAge clock models: [Transcriptomic clock models and rodent gene expression meta-dataset](https://zenodo.org/records/18763485)
+- Open Genes Hallmarks of Aging genes: [Open Genes genes](https://open-genes.com/genes)
+- Open Genes API documentation: [Open Genes API docs](https://open-genes.com/api/docs)
+
+## Quick Start
+
+Run from a project directory containing this repository's `scripts/`, local tAge `models/`, and `config/validation_models.csv`:
+
+```bash
+pixi run Rscript scripts/run_tage_hallmarks_report.R \
+  --rsem-dir /path/to/rsem_gene_results \
+  --metadata /path/to/metadata.csv \
+  --sample-id-col sample_id \
+  --group-col condition \
+  --control-group Control \
+  --species human \
+  --gene-mapping-type Ensembl \
+  --model-family EN \
+  --target mortality \
+  --model-species Multispecies \
+  --model-tissue Multitissue \
+  --preprocess scaled_diff \
+  --out-dir results/example_tage_hallmarks
+```
+
+For a raw count matrix instead of RSEM files:
+
+```bash
+pixi run Rscript scripts/run_tage_hallmarks_report.R \
+  --counts /path/to/raw_counts.csv \
+  --metadata /path/to/metadata.csv \
+  --sample-id-col sample_id \
+  --group-col condition \
+  --control-group Control \
+  --species human \
+  --gene-mapping-type Ensembl \
+  --model-family EN \
+  --target mortality \
+  --model-species Multispecies \
+  --model-tissue Multitissue \
+  --preprocess scaled_diff \
+  --out-dir results/example_tage_hallmarks
+```
+
+## Input Formats
+
+### RSEM Directory
+
+Use `--rsem-dir` for a directory containing files named:
+
+```text
+<sample_id>.genes.results
+```
+
+Each file must contain:
+
+- `gene_id`
+- `expected_count`
+
+### Count Matrix
+
+Use `--counts` for a CSV matrix:
+
+- first column: gene ID or gene symbol
+- remaining columns: sample IDs
+- values: raw counts or RSEM expected counts
+
+### Metadata
+
+Required columns:
+
+- sample ID column passed by `--sample-id-col`
+- group/condition column passed by `--group-col`
+
+Optional:
+
+- tissue column passed by `--tissue-col`
+- subset value passed by `--tissue-value`
+
+## Species and Model Options
+
+Accepted analysis species:
+
+```text
+human, mouse, rat, monkey
+```
+
+tAge model options:
+
+```text
+--model-family EN|BR|all
+--target mortality|chronoage|normalizedage|all
+--model-species Multispecies|Mouse|Rodents|auto
+--model-tissue Multitissue|Liver|Brain|Kidney|Skeletal_muscle|auto
+--preprocess scaled_diff|yugene_diff|all
+```
+
+Defaults:
+
+```text
+EN, mortality, Multispecies, Multitissue, scaled_diff
+```
+
+If `--model-tissue auto` is used, the workflow attempts to match `--tissue-value` to a locally available model tissue and otherwise falls back to `Multitissue`.
+
+## Output Layout
+
+The workflow writes under `--out-dir`:
+
+```text
+prepared/
+qc/
+tage_predictions/
+hallmark_results/
+figures/
+report/
+logs/
+```
+
+Main outputs:
+
+- `report/tage_hallmarks_report.html`
+- `report/tage_hallmarks_report.pdf`
+- `tage_predictions/tAge_vs_control_tests.csv`
+- `hallmark_results/open_genes_aged_direction_ssgsea_limma_vs_control.csv`
+- `hallmark_results/open_genes_aged_direction_ssgsea_intervention_rejuvenation_summary.csv`
+
+## Interpretation
+
+For Hallmark ssGSEA:
+
+- `aged_up`: rejuvenation direction is lower score in intervention versus control.
+- `aged_down`: rejuvenation direction is higher score in intervention versus control.
+- `direction_corrected_ssgsea_reversal > 0` means the intervention moved opposite to the aging direction.
+
+Raw counts are not used directly for pathway scoring. The workflow uses DESeq2 VST-normalized expression for GSVA/ssGSEA.

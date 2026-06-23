@@ -1,0 +1,12 @@
+results/
+server_outputs/
+models/
+*.pkl
+*.rds
+*.RData
+*.Rhistory
+*.genes.results
+raw_counts.csv
+metadata.csv
+.DS_Store
+
