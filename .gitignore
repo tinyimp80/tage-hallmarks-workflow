@@ -11,3 +11,4 @@ metadata.csv
 .DS_Store
 AGENTS.md
 docs/
+config/validation_models.csv

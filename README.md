@@ -16,6 +16,16 @@ This repository contains workflow code and Open Genes Hallmark gene sets. It req
 
 PDF report rendering uses headless Chrome with `google-chrome --headless --print-to-pdf`.
 
+Prepare local tAge model files:
+
+```bash
+mkdir -p models config
+cp config/validation_models.example.csv config/validation_models.csv
+md5sum models/*.pkl
+```
+
+The example registry lists the expected Gladyshev tAge model filenames and checksums for the default multispecies multitissue models. If you use a different model set, edit `config/validation_models.csv` so each `*_file` entry matches a file in `models/` and each `*_md5` entry matches the corresponding checksum. The workflow uses this registry to select models and validate file integrity before running tAge.
+
 Install with pixi:
 
 ```bash
