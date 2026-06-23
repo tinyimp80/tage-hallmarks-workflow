@@ -31,7 +31,7 @@ Missing tAge models are not downloaded automatically in v1.
 
 ## Sources
 
-- tAge clock models: [Transcriptomic clock models and rodent gene expression meta-dataset](https://zenodo.org/records/18763485)
+- vadim tAge: [Gladyshev-Lab/tAge](https://github.com/Gladyshev-Lab/tAge)
 - Open Genes Hallmarks of Aging genes: [Open Genes genes](https://open-genes.com/genes)
 - Open Genes API documentation: [Open Genes API docs](https://open-genes.com/api/docs)
 
