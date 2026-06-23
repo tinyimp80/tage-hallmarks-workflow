@@ -20,7 +20,7 @@ Prepare local tAge model files:
 
 ```bash
 mkdir -p models config
-cp config/validation_models.example.csv config/validation_models.csv
+cp example/validation_models.csv config/validation_models.csv
 md5sum models/*.pkl
 ```
 
