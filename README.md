@@ -31,9 +31,11 @@ Missing tAge models are not downloaded automatically in v1.
 
 ## Sources
 
-- vadim tAge: [Gladyshev-Lab/tAge](https://github.com/Gladyshev-Lab/tAge)
-- Open Genes Hallmarks of Aging genes: [Open Genes genes](https://open-genes.com/genes)
+- vadim tAge code: [Gladyshev-Lab/tAge](https://github.com/Gladyshev-Lab/tAge)
+- vadim tAge publication: [https://doi.org/10.1038/s41586-026-10542-3](https://doi.org/10.1038/s41586-026-10542-3)
+- Open Genes genes: [Open Genes genes](https://open-genes.com/genes)
 - Open Genes API documentation: [Open Genes API docs](https://open-genes.com/api/docs)
+- Open Genes publication: [https://doi.org/10.1093/nar/gkad712](https://doi.org/10.1093/nar/gkad712)
 
 ## Included Gene Sets
 
