@@ -4,15 +4,17 @@ Reusable R workflow for transcriptomic aging analysis from raw RNA-seq counts or
 
 It runs:
 
-- Gladyshev `tAge` prediction
+- Gladyshev [`tAge`](https://github.com/Gladyshev-Lab/tAge) prediction, following the Gladyshev tAge publication ([Nature, 2026](https://doi.org/10.1038/s41586-026-10542-3))
 - DESeq2 VST normalization
-- Open Genes Hallmarks of Aging aged-up/down ssGSEA
+- [Open Genes](https://open-genes.com/genes) Hallmarks of Aging aged-up/down ssGSEA, using gene metadata available through the [Open Genes API](https://open-genes.com/api/docs) and Open Genes publication ([NAR, 2024](https://doi.org/10.1093/nar/gkad712))
 - limma intervention-vs-control tests
 - HTML and PDF report generation
 
 ## Requirements
 
 This repository contains workflow code and Open Genes Hallmark gene sets. It requires local Gladyshev tAge model files under `models/` and a model registry at `config/validation_models.csv`.
+
+PDF report rendering uses headless Chrome with `google-chrome --headless --print-to-pdf`.
 
 Install with pixi:
 
@@ -97,14 +99,14 @@ gene_sets/open_genes_hallmark_aged_up_down_ensembl.gmt
 gene_sets/open_genes_hallmark_aged_up_down_gene_set_summary.csv
 ```
 
-The GMT was built from Open Genes genes assigned to Hallmarks of Aging categories following the Hallmarks framework. Genes were split into `aged_up` and `aged_down` using a reference `Quiescence` versus `Senescence` differential-expression contrast from the dataset associated with `https://doi.org/10.18632/aging.204896`:
+The GMT was built from [Open Genes](https://open-genes.com/genes) genes assigned to Hallmarks of Aging categories following the [Hallmarks framework](https://doi.org/10.1016/j.cell.2022.11.001). Genes were split into `aged_up` and `aged_down` using a reference `Quiescence` versus `Senescence` differential-expression contrast from the dataset associated with [Aging, 2022](https://doi.org/10.18632/aging.204896):
 
 - `aged_log2FC = -1 * log2FoldChange`
 - `aged_up`: `aged_log2FC > 0`
 - `aged_down`: `aged_log2FC < 0`
 - no adjusted-p-value filter was applied for this direction split
 
-`Dysbiosis` is not included because it does not have a direct Open Genes Hallmark gene mapping in this workflow.
+`Dysbiosis` is excluded because host bulk RNA-seq alone cannot directly measure dysbiosis; microbiome or related microbial-composition data would be required.
 
 ## Outputs
 
@@ -136,13 +138,3 @@ For Hallmark ssGSEA, `direction_corrected_ssgsea_reversal > 0` means the interve
 - `aged_down`: higher intervention score than control is interpreted as rejuvenation direction
 
 Raw counts are not scored directly. The workflow uses DESeq2 VST-normalized expression for GSVA/ssGSEA.
-
-## Sources
-
-- Gladyshev tAge code: [Gladyshev-Lab/tAge](https://github.com/Gladyshev-Lab/tAge)
-- Gladyshev tAge publication: [https://doi.org/10.1038/s41586-026-10542-3](https://doi.org/10.1038/s41586-026-10542-3)
-- Open Genes genes: [https://open-genes.com/genes](https://open-genes.com/genes)
-- Open Genes API documentation: [https://open-genes.com/api/docs](https://open-genes.com/api/docs)
-- Open Genes publication: [https://doi.org/10.1093/nar/gkad712](https://doi.org/10.1093/nar/gkad712)
-- Hallmarks of Aging framework: [https://doi.org/10.1016/j.cell.2022.11.001](https://doi.org/10.1016/j.cell.2022.11.001)
-- Reference data for aged-up/down direction assignment: [https://doi.org/10.18632/aging.204896](https://doi.org/10.18632/aging.204896)

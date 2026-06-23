@@ -9,4 +9,5 @@ models/
 raw_counts.csv
 metadata.csv
 .DS_Store
-
+AGENTS.md
+docs/
