@@ -13,12 +13,18 @@ dependencies:
   - r-pheatmap
   - r-reticulate
   - r-biocmanager
+  - r-remotes
   - bioconductor-deseq2
   - bioconductor-gsva
   - bioconductor-limma
   - bioconductor-biobase
+  - bioconductor-edger
   - python>=3.10,<3.13
+  - git
+  # GSVA imports SpatialExperiment in current Bioconductor releases. SpatialExperiment
+  # imports R magick, so pin ImageMagick to the ABI expected by conda-forge r-magick.
+  - imagemagick=7.1.2_25
+  - libuv
   - joblib
   - pandas
   - scikit-learn
-
