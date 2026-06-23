@@ -13,11 +13,19 @@ suppressPackageStartupMessages({
 project_dir <- normalizePath(Sys.getenv("TAGE_PROJECT_DIR", unset = getwd()), mustWork = TRUE)
 zenodo_record_url <- "https://zenodo.org/records/18763485"
 
-default_hallmark_gmt <- file.path(
+packaged_hallmark_gmt <- file.path(
+  project_dir,
+  "gene_sets",
+  "open_genes_hallmark_aged_up_down_ensembl.gmt"
+)
+
+legacy_hallmark_gmt <- file.path(
   project_dir,
   "results", "aging_chemical_hallmarks", "hallmarks_aging", "results",
   "open_genes_go_pairwise_termsim", "open_genes_hallmark_GO_input_sets_ensembl.gmt"
 )
+
+default_hallmark_gmt <- if (file.exists(packaged_hallmark_gmt)) packaged_hallmark_gmt else legacy_hallmark_gmt
 
 hallmark_order <- c(
   "Genomic Instability", "Telomere Attrition", "Epigenetic Alterations",

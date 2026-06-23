@@ -1,0 +1,23 @@
+aging_hallmark,set_mode,input_set_name,input_ensembl_n,input_entrez_n
+Altered Intercellular Communication,aged_up,Altered_Intercellular_Communication__aged_up,111,113
+Altered Intercellular Communication,aged_down,Altered_Intercellular_Communication__aged_down,108,108
+Cellular Senescence,aged_up,Cellular_Senescence__aged_up,21,21
+Cellular Senescence,aged_down,Cellular_Senescence__aged_down,24,24
+Chronic Inflammation,aged_up,Chronic_Inflammation__aged_up,64,65
+Chronic Inflammation,aged_down,Chronic_Inflammation__aged_down,48,48
+Deregulated Nutrient Sensing,aged_up,Deregulated_Nutrient_Sensing__aged_up,48,48
+Deregulated Nutrient Sensing,aged_down,Deregulated_Nutrient_Sensing__aged_down,32,33
+Disabled Macroautophagy,aged_up,Disabled_Macroautophagy__aged_up,18,18
+Disabled Macroautophagy,aged_down,Disabled_Macroautophagy__aged_down,17,17
+Epigenetic Alterations,aged_up,Epigenetic_Alterations__aged_up,201,202
+Epigenetic Alterations,aged_down,Epigenetic_Alterations__aged_down,280,280
+Genomic Instability,aged_up,Genomic_Instability__aged_up,93,94
+Genomic Instability,aged_down,Genomic_Instability__aged_down,106,108
+Loss of Proteostasis,aged_up,Loss_of_Proteostasis__aged_up,111,111
+Loss of Proteostasis,aged_down,Loss_of_Proteostasis__aged_down,86,86
+Mitochondrial Dysfunction,aged_up,Mitochondrial_Dysfunction__aged_up,128,130
+Mitochondrial Dysfunction,aged_down,Mitochondrial_Dysfunction__aged_down,122,123
+Stem Cell Exhaustion,aged_up,Stem_Cell_Exhaustion__aged_up,16,16
+Stem Cell Exhaustion,aged_down,Stem_Cell_Exhaustion__aged_down,29,30
+Telomere Attrition,aged_up,Telomere_Attrition__aged_up,11,11
+Telomere Attrition,aged_down,Telomere_Attrition__aged_down,23,24

@@ -35,6 +35,31 @@ Missing tAge models are not downloaded automatically in v1.
 - Open Genes Hallmarks of Aging genes: [Open Genes genes](https://open-genes.com/genes)
 - Open Genes API documentation: [Open Genes API docs](https://open-genes.com/api/docs)
 
+## Included Gene Sets
+
+This repository includes an Ensembl GMT file:
+
+```text
+gene_sets/open_genes_hallmark_aged_up_down_ensembl.gmt
+```
+
+The gene sets were built from Open Genes Hallmarks of Aging genes and split into direction-specific `aged_up` and `aged_down` sets using an Aging_chemical reference differential-expression contrast:
+
+- reference contrast: `Quiescence` versus `Senescence`
+- `aged_log2FC = -1 * log2FoldChange`
+- `aged_up`: Open Genes Hallmark genes with `aged_log2FC > 0`
+- `aged_down`: Open Genes Hallmark genes with `aged_log2FC < 0`
+- no adjusted-p-value filter was applied for the direction split; fold-change sign alone defines direction
+- genes without a mapped Ensembl ID or without a nonzero reference fold-change direction were not included in direction-specific sets
+
+The resulting GMT contains 22 gene sets: 11 Open Genes Hallmark categories, each represented as `aged_up` and `aged_down`. `Dysbiosis` is not included because it does not have a direct Open Genes Hallmark gene mapping in this workflow.
+
+The companion summary table is:
+
+```text
+gene_sets/open_genes_hallmark_aged_up_down_gene_set_summary.csv
+```
+
 ## Quick Start
 
 Run from a project directory containing this repository's `scripts/`, local tAge `models/`, and `config/validation_models.csv`:
