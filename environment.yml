@@ -1,0 +1,24 @@
+name: tage-hallmarks-workflow
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - r-base>=4.4,<4.6
+  - r-data.table
+  - r-dplyr
+  - r-tidyr
+  - r-tibble
+  - r-stringr
+  - r-ggplot2
+  - r-pheatmap
+  - r-reticulate
+  - r-biocmanager
+  - bioconductor-deseq2
+  - bioconductor-gsva
+  - bioconductor-limma
+  - bioconductor-biobase
+  - python>=3.10,<3.13
+  - joblib
+  - pandas
+  - scikit-learn
+

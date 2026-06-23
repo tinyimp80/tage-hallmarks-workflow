@@ -21,6 +21,22 @@ pixi install
 pixi run Rscript scripts/install_requirements.R --check-only
 ```
 
+Or create the same runtime with mamba or conda:
+
+```bash
+mamba env create -f environment.yml
+mamba activate tage-hallmarks-workflow
+Rscript scripts/install_requirements.R --check-only
+```
+
+The equivalent conda commands are:
+
+```bash
+conda env create -f environment.yml
+conda activate tage-hallmarks-workflow
+Rscript scripts/install_requirements.R --check-only
+```
+
 The workflow expects:
 
 - the `tAge` R package to be installed in the runtime environment
@@ -70,6 +86,27 @@ Run from a project directory containing this repository's `scripts/`, local tAge
 
 ```bash
 pixi run Rscript scripts/run_tage_hallmarks_report.R \
+  --rsem-dir /path/to/rsem_gene_results \
+  --metadata /path/to/metadata.csv \
+  --sample-id-col sample_id \
+  --group-col condition \
+  --control-group Control \
+  --species human \
+  --gene-mapping-type Ensembl \
+  --model-family EN \
+  --target mortality \
+  --model-species Multispecies \
+  --model-tissue Multitissue \
+  --preprocess scaled_diff \
+  --out-dir results/example_tage_hallmarks
+```
+
+If using conda or mamba, activate the environment first and call `Rscript` directly:
+
+```bash
+mamba activate tage-hallmarks-workflow
+
+Rscript scripts/run_tage_hallmarks_report.R \
   --rsem-dir /path/to/rsem_gene_results \
   --metadata /path/to/metadata.csv \
   --sample-id-col sample_id \
