@@ -36,6 +36,8 @@ Missing tAge models are not downloaded automatically in v1.
 - Open Genes genes: [Open Genes genes](https://open-genes.com/genes)
 - Open Genes API documentation: [Open Genes API docs](https://open-genes.com/api/docs)
 - Open Genes publication: [https://doi.org/10.1093/nar/gkad712](https://doi.org/10.1093/nar/gkad712)
+- Hallmarks of Aging framework: [https://doi.org/10.1016/j.cell.2022.11.001](https://doi.org/10.1016/j.cell.2022.11.001)
+- Reference data used for aged-up/down direction assignment: [https://doi.org/10.18632/aging.204896](https://doi.org/10.18632/aging.204896)
 
 ## Included Gene Sets
 
@@ -45,7 +47,7 @@ This repository includes an Ensembl GMT file:
 gene_sets/open_genes_hallmark_aged_up_down_ensembl.gmt
 ```
 
-The gene sets were built from Open Genes Hallmarks of Aging genes and split into direction-specific `aged_up` and `aged_down` sets using an Aging_chemical reference differential-expression contrast:
+The gene sets were built from Open Genes genes assigned to Hallmarks of Aging categories following the Hallmarks framework described in [https://doi.org/10.1016/j.cell.2022.11.001](https://doi.org/10.1016/j.cell.2022.11.001). Genes were then split into direction-specific `aged_up` and `aged_down` sets using a reference differential-expression contrast from the dataset associated with [https://doi.org/10.18632/aging.204896](https://doi.org/10.18632/aging.204896):
 
 - reference contrast: `Quiescence` versus `Senescence`
 - `aged_log2FC = -1 * log2FoldChange`
