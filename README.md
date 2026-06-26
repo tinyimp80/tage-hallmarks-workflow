@@ -116,6 +116,8 @@ The GMT was built from [Open Genes](https://open-genes.com/genes) genes assigned
 - `aged_down`: `aged_log2FC < 0`
 - no adjusted-p-value filter was applied for this direction split
 
+No separate whole-Hallmark GMT is required. For directional Hallmark activity scoring, the workflow combines each Hallmark's `aged_up` and `aged_down` entries into one signed gene set.
+
 `Dysbiosis` is excluded because host bulk RNA-seq alone cannot directly measure dysbiosis; microbiome or related microbial-composition data would be required.
 
 ## Outputs
@@ -146,10 +148,10 @@ Key files:
 
 ## Interpretation
 
-Hallmark activity is a single directional score per Hallmark, not separate aged-up and aged-down ssGSEA scores. The workflow uses DESeq2 VST expression and gene-wise z-scores:
+Hallmark activity is a single directional score per Hallmark. The workflow uses DESeq2 VST expression and gene-wise z-scores:
 
-- aged-up genes receive weight `+1`
-- aged-down genes receive weight `-1`
+- `aged_up` genes receive weight `+1`
+- `aged_down` genes receive weight `-1`
 - `Hallmark_Aging_Activity = mean(direction_weight * gene_z)`
 
 For intervention-vs-control contrasts:
