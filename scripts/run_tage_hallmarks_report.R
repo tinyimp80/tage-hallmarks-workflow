@@ -44,7 +44,7 @@ main <- function() {
     script_path("02_validate_models.R")
   )
   if (!isTRUE(opts[["config-only"]])) {
-    steps <- c(steps, script_path("03_run_tage.R"), script_path("04_run_hallmark_ssgsea.R"), script_path("05_make_report.R"))
+    steps <- c(steps, script_path("03_run_tage.R"), script_path("04_run_hallmark_rejuvenation_score.R"), script_path("05_make_report.R"))
   }
   for (step in steps) run_step(step, config_file, log_file)
   if (isTRUE(opts[["config-only"]])) {

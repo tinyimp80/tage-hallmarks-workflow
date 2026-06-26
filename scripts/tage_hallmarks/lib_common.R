@@ -37,7 +37,7 @@ set_mode_order <- c("aged_up", "aged_down")
 
 usage <- function() {
   cat("
-One-line tAge + Open Genes aging Hallmark ssGSEA workflow
+One-line tAge + Open Genes directional aging Hallmark workflow
 
 Required:
   --metadata FILE
@@ -67,6 +67,9 @@ Optional:
   --low-count-min-total N                          default: 10
   --min-gene-set-size N                            default: 5
   --max-gene-set-size N                            default: 1000
+  --young-control-group LABEL[,LABEL...]           omit young/reference groups from Hallmark plots
+  --young-reference-group LABEL[,LABEL...]         alias for --young-control-group
+  --hallmark-plot-exclude-groups LABEL[,LABEL...]  omit additional groups from Hallmark plots
   --config-only                                    validate inputs/model selection only
   --help
 ")

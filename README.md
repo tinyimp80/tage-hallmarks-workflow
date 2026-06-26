@@ -6,7 +6,7 @@ It runs:
 
 - Gladyshev [`tAge`](https://github.com/Gladyshev-Lab/tAge) prediction, following the Gladyshev tAge publication ([Nature, 2026](https://doi.org/10.1038/s41586-026-10542-3))
 - DESeq2 VST normalization
-- [Open Genes](https://open-genes.com/genes) Hallmarks of Aging aged-up/down ssGSEA, using gene metadata available through the [Open Genes API](https://open-genes.com/api/docs) and Open Genes publication ([NAR, 2024](https://doi.org/10.1093/nar/gkad712))
+- [Open Genes](https://open-genes.com/genes) Hallmarks of Aging directional activity scoring from DESeq2 VST expression, using gene metadata available through the [Open Genes API](https://open-genes.com/api/docs) and Open Genes publication ([NAR, 2024](https://doi.org/10.1093/nar/gkad712))
 - limma intervention-vs-control tests
 - HTML and PDF report generation
 
@@ -40,7 +40,7 @@ Or with mamba:
 mamba env create -f environment.yml
 mamba activate tage-hallmarks-workflow
 Rscript -e 'remotes::install_github("Gladyshev-Lab/tAge", upgrade = "never", dependencies = c("Depends", "Imports", "LinkingTo"), build_vignettes = FALSE)'
-Rscript -e 'pkgs <- c("data.table", "dplyr", "tidyr", "tibble", "stringr", "ggplot2", "pheatmap", "reticulate", "remotes", "DESeq2", "GSVA", "limma", "Biobase", "edgeR", "tAge"); missing <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly = TRUE)]; if (length(missing)) stop("Missing packages: ", paste(missing, collapse = ", ")); message("All required R packages are available.")'
+Rscript -e 'pkgs <- c("data.table", "dplyr", "tidyr", "tibble", "stringr", "ggplot2", "pheatmap", "reticulate", "remotes", "DESeq2", "limma", "Biobase", "edgeR", "tAge"); missing <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly = TRUE)]; if (length(missing)) stop("Missing packages: ", paste(missing, collapse = ", ")); message("All required R packages are available.")'
 ```
 
 For conda, replace `mamba` with `conda` in the commands above.
@@ -137,14 +137,35 @@ Key files:
 - `report/tage_hallmarks_report.html`
 - `report/tage_hallmarks_report.pdf`
 - `tage_predictions/tAge_vs_control_tests.csv`
-- `hallmark_results/open_genes_aged_direction_ssgsea_limma_vs_control.csv`
-- `hallmark_results/open_genes_aged_direction_ssgsea_intervention_rejuvenation_summary.csv`
+- `hallmark_results/open_genes_directional_hallmark_activity_score_matrix.csv`
+- `hallmark_results/open_genes_directional_hallmark_activity_scores_long.csv`
+- `hallmark_results/open_genes_directional_hallmark_activity_limma_vs_control.csv`
+- `hallmark_results/open_genes_directional_hallmark_activity_intervention_rejuvenation_summary.csv`
+- `hallmark_results/open_genes_hallmark_gene_reversal_percentage_summary.csv`
+- `hallmark_results/open_genes_directional_hallmark_rejuvenation_dotplot_values.csv`
 
 ## Interpretation
 
-For Hallmark ssGSEA, `direction_corrected_ssgsea_reversal > 0` means the intervention moved opposite to the aging direction:
+Hallmark activity is a single directional score per Hallmark, not separate aged-up and aged-down ssGSEA scores. The workflow uses DESeq2 VST expression and gene-wise z-scores:
 
-- `aged_up`: lower intervention score than control is interpreted as rejuvenation direction
-- `aged_down`: higher intervention score than control is interpreted as rejuvenation direction
+- aged-up genes receive weight `+1`
+- aged-down genes receive weight `-1`
+- `Hallmark_Aging_Activity = mean(direction_weight * gene_z)`
 
-Raw counts are not scored directly. The workflow uses DESeq2 VST-normalized expression for GSVA/ssGSEA.
+For intervention-vs-control contrasts:
+
+```text
+Activity_Rejuvenation_Score = -1 * (mean activity_intervention - mean activity_control)
+```
+
+Positive values indicate movement opposite to the aging direction. Negative values indicate aging-like movement relative to the selected control.
+
+The primary Hallmark dot plot encodes:
+
+- color: VST-based `Activity_Rejuvenation_Score`
+- dot size and inner percentage: percent of Hallmark genes reversed in the DESeq2 intervention-vs-control contrast
+- stars: activity-score p-value
+
+Raw counts are not scored directly. The workflow uses DESeq2 VST-normalized expression for Hallmark activity scoring.
+
+The Step 04 script is `scripts/tage_hallmarks/04_run_hallmark_rejuvenation_score.R`.
